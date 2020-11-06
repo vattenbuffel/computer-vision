@@ -5,6 +5,7 @@ clc; clear all; clf
 img = imread('./assignment1data/compEx2.jpg');
 imagesc(img)
 colormap gray
+axis equal
 
 % Read the points ,convert them to R^2, and plot them
 load('./assignment1data/compEx2.mat')
@@ -12,10 +13,6 @@ p1_euclidian = pflat(p1);
 p2_euclidian = pflat(p2);
 p3_euclidian = pflat(p3);
 hold on
-% Why is this incorrect?
-% scatter(p1(:,1), p1(:,2), 100, 'red', 'filled')
-% scatter(p2(:,1), p2(:,2), 100, 'blue', 'filled')
-% scatter(p3(:,1), p3(:,2), 100, 'green', 'filled')
 
 scatter(p1_euclidian(1,:), p1_euclidian(2,:), 100, 'red', 'filled')
 scatter(p2_euclidian(1,:), p2_euclidian(2,:), 100, 'blue', 'filled')
@@ -68,8 +65,8 @@ legend('P1', 'P2', 'P3', 'L1', 'L2', 'L3', 'Cross point of L2 and L3')
 
 
 % Distance between L1 and cross point
-d = abs(L1.'*[x_cross_euclidian; 1])/sqrt(L1(1)^2 + L2(2)^2);
-fprintf("The distance between L1 and the cross point between L2 and L3 is %f l.u.\n", d)
+d = abs(L1.'*[x_cross_euclidian; 1])/sqrt(L1(1)^2 + L1(2)^2);
+fprintf("The distance between L1 and the cross point between L2 and L3 is %f pixels.\n", d)
 
 
 
