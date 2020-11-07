@@ -59,45 +59,31 @@ quiver3 (camera_center(1) ,camera_center(2) ,camera_center(3) ,principial_axis(1
 R =     [cos(pi/9) 0 -sin(pi/9)
          0 1 0
          sin(pi/9) 0 cos(pi/9)];
+     
+t = [0 0 -1].';
+P_new = [R t];
 
-camera_center_new = [-1 0 0].';
-M_new = R;
-m_new = R(3,:);
+camera_center_new = null(P_new);
+M_new = P_new(1:3, 1:3);
+m_new = M_new(3,:);
 principial_axis_new = det(M_new)*m_new;
-quiver3 (camera_center_new(1) ,camera_center_new(2) ,camera_center_new(3) ,principial_axis_new(1) ,principial_axis_new(2) ,principial_axis_new(3) ,1/det(M))
+quiver3 (camera_center(1)new ,camera_center(2) ,camera_center(3) ,principial_axis(1) ,principial_axis(2) ,principial_axis(3) ,1/det(M))
 
-legend('Corners', 'Original camera', 'New camera')
 
-% Plot the corners from the new camera
+
+
 figure
 axis ij
 axis equal
 hold on
 
-% Calculate the homography mapping the cameras
-% Start by calculating t:
-% P = [R t]
-% null(P) = P * camera_center = 0
-
-syms t1 t2 t3
-P_new = [R [t1;t2;t3]];
-sol = solve(P_new*[camera_center_new; 1] == 0);
-t = [sol.t1; sol.t2; sol.t3];
-t = double(t);
-
-% Calculate the homography based on exercise 6 and transform the corners
 H = R-t*pflat(v).';
 corners_new = H*normalized_corner;
 corners_new_euclidian = pflat(corners_new);
 
 plot(corners_new_euclidian (1 ,[1: end 1]) , corners_new_euclidian (2 ,[1: end 1]), ' *- ' ) 
 
-% Transform the 3D points using the homography
-corners_3D_to_2D = pflat(H*pflat(U));
-plot(corners_3D_to_2D (1 ,[1: end 1]) , corners_3D_to_2D (2 ,[1: end 1]), ' *- ' ) 
-legend('Normalized corner to 2D view', '3D corners to 2D view')
 
-% Transofrm the image into the view of the new camera and plot it
 figure
 hold on
 axis equal

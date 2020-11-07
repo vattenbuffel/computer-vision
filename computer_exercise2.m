@@ -1,5 +1,5 @@
-% close all
-clc; clear all; clf
+close all
+clc; clear all; 
 
 % Read the image and plot it as gray
 img = imread('./assignment1data/compEx2.jpg');
