@@ -1,5 +1,5 @@
 clc; clear all; close all;
-format rat
+%format rat
 load('./assignment2data/compEx1Data.mat')
 
 % Extract the original P-matrix
@@ -19,8 +19,8 @@ T2 =[1 0 0 0
      0 0 1 0
      1/16 1/16 0 1];
 
-P_T1 = P_original*T1;
-P_T2 = P_original*T2;
+P_T1 = P_original*T1^-1;
+P_T2 = P_original*T2^-1;
 
 
 K_original = rq(P_original);

@@ -4,15 +4,15 @@ load('./assignment2data/compEx3Data.mat')
 img1 = imread('./assignment2data/cube1.jpg');
 
 x1 = x{1};
-%x1 = x{1}(:, [1, 4, 13, 16, 25, 28, 31]);
-%Xmodel = Xmodel(:, [1, 4, 13, 16, 25, 28, 31]);
+% x1 = x{1}(:, [1, 4, 13, 16, 25, 28, 31]); Xmodel = Xmodel(:, [1, 4, 13, 16, 25, 28, 31]);
 
 x1_mean = mean(x1.');
+mean (x{1 }(1:2 ,:) ,2)
 x1_std = std(x1.');
 N = [1/x1_std(1) 0 -x1_mean(1)/x1_std(1)
      0 1/x1_std(2) -x1_mean(2)/x1_std(2)
      0 0 1];
-%N = eye(3)
+% N = eye(3)
 
 x1_normalized = N*x1; 
 
@@ -89,7 +89,7 @@ save('P1.mat', 'P1')
 
 
 % Optional part
-erms = @(x_proj)sqrt(1/size(x1, 2)*norm(x1-x_proj, 'fro'));
+erms = @(x_proj)sqrt(1/size(x1, 2)*norm(pflat(x1)-pflat(x_proj), 'fro')^2);
 rms_error = erms(xmodel)
 
 

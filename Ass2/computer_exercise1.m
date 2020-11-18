@@ -46,12 +46,12 @@ T2 =[1 0 0 0
 P_T1 = P;
 P_T2 = P;
 for i = 1:9
-    P_T1{i} = P{i}*T1;
-    P_T2{i} = P{i}*T2;
+    P_T1{i} = P{i}*T1^-1;
+    P_T2{i} = P{i}*T2^-1;
 end
  
-X_T1 = T1^-1*X;
-X_T2 = T2^-1*X;
+X_T1 = T1*X;
+X_T2 = T2*X;
 
 % Plot the new 3D cooridnates and cameras
 figure
