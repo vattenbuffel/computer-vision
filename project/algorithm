@@ -1,0 +1,13 @@
+Step 1: Filter outliers - Find good X, called U for some reason
+	1) MinimalCameraPose - get potential cameras
+	2) Check the number of inliers each camera gives: 
+		a) Loop over all the images and projet X
+		b) Compare the error compared to x
+		c) Inliers are those where the error is lower than a threshold
+		Summary) inliers = X(||x-PX|| < threshold)
+	
+	3) Save the camera with most inliers
+
+
+Step 2: Resectioning algorithm - Improve Camera and X
+	1) Do LM, gauss newton, steepest descent or some shit from lecture 9.
