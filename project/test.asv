@@ -1,0 +1,48 @@
+clc; clear all; close all
+% load ('P')
+% load('./assignment5data/compEx2Data.mat')
+% im1 = imread('./assignment5data/kronan1.JPG');
+load('./data/data1.mat')
+
+
+% Sample 3 correspondences and find candidate camera matrices for one object
+obj_idx = 2;
+n_inliers_max = -1;
+P_best = [];
+n_iterations = 1000; % Calculate how many this should be somehow
+threshold = 0.005; % 0.001 and 0.005 both seem good
+
+root_error = @(x, y) 
+
+for i = 1:n_iterations 
+    % Get candidate cameras
+    n_points = size(U{obj_idx}, 2);
+    ind = randsample(n_points, 3);
+    Ps = minimalCameraPose(pextend(u{obj_idx}(:, ind)), U{obj_idx}(:, ind));
+    
+    % Calculate number of inliers
+    for p_index = 1:size(Ps,2)
+       P = Ps{p_index};
+       x = P*[U{obj_idx}; ones(1,n_points)];
+       n_inliers = sum((sum((pflat(x)-u{obj_idx}).^2)).^(0.5) < threshold);
+       
+       if n_inliers > n_inliers_max
+          n_inliers_max = n_inliers;
+          P_best = P;
+       end
+       
+    end
+
+end
+
+x = P_best*[U{obj_idx}; ones(1,n_points)];
+inliers = U{obj_idx}(:, (sum((pflat(x)-u{obj_idx}).^2)).^(0.5) < threshold);
+
+
+plot3(inliers(1,:), inliers(2,:), inliers(3,:), 'o')
+
+
+
+
+
+

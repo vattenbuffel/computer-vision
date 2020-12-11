@@ -5,37 +5,13 @@ clc; clear all; close all
 load('./data/data1.mat')
 
 
-% Sample 3 correspondences and find candidate camera matrices for one object
-obj_idx = 1;
-n_inliers_max = -1;
-P_best = [];
-n_iterations = 100;
-threshold = 0.05;
+threshold = 0.005; % 0.001 and 0.005 both seem good
+obj_idx = 2;
 
-for i = 1:n_iterations
-    % Get candidate cameras
-    ind = randsample(size(U{obj_idx}, 2), 3);
-    Ps = minimalCameraPose(pextend(u{obj_idx}(:, ind)), U{obj_idx}(:, ind));
-    
-    % Calculate number of inliers
-    for p_index = 1:size(Ps)
-       P = Ps(p_index);
-       x = P*U{obj_idx};
-       n_inliers = ((x-u).^2).^(0.5) < threshold;
-       
-       if n_inliers > n_inliers_max
-          n_inliers_max = n_inliers;
-          P_best = P;
-       end
-       
-    end
-
-end
+[P, inliers] = get_best_ransac_camera(obj_idx, threshold, U, u);
 
 
-
-
-
+plot3(inliers(1,:), inliers(2,:), inliers(3,:), 'o')
 
 
 
