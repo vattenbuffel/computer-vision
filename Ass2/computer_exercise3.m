@@ -28,7 +28,7 @@ scatter(x1_normalized_euclidian(1,:), x1_normalized_euclidian(2,:))
 X = [Xmodel;ones(1, size(Xmodel, 2))];
 n_points = size(x1,2);
 n_rows = 3*size(x1,2);
-n_cols = size(x1,1)*3 + size(x1,2);
+n_cols = size(x1,2)*3 + size(x1,2);
 M = zeros(n_rows, n_cols);
 for i=1:n_points
     % Add X

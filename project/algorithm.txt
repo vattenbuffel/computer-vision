@@ -1,4 +1,4 @@
-Step 1: Filter outliers - Find good X and cameras, called U for some reason
+Step 1: Filter outliers - Find good cameras
 	% Should we loop over all images or only 1?
 	1) MinimalCameraPose - get potential cameras
 	2) Check the number of inliers each camera gives: 
@@ -10,5 +10,5 @@ Step 1: Filter outliers - Find good X and cameras, called U for some reason
 	3) Save the camera with most inliers, and the inliers
 
 
-Step 2: Resectioning algorithm - Improve Camera and X
+Step 2: Resectioning algorithm - Improve Camera
 	1) Do LM, gauss newton, steepest descent or some shit from lecture 9.

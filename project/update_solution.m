@@ -1,4 +1,5 @@
-function [Pnew,Unew] = update_solution(deltav,P,U)
+%function [Pnew,Unew] = update_solution(deltav,P,U)
+function [Pnew] = update_solution(deltav,P)
 % Computes updated cameras Pnew and 3D points Unew, from the old solution
 % P,U and the parameter increment deltav. If cameras are not calibrated, K
 % will still be constant throughout the update step.
@@ -7,18 +8,19 @@ function [Pnew,Unew] = update_solution(deltav,P,U)
 % These are the first (3*size(U,2)-1) elements of deltav, but yield the
 % total 3*size(U,2) point parameter increments, when combined with a fix 0
 % increment for the first parameter.
-delta_pointvar = [0; deltav(1:(3*size(U,2)-1))]; % shape: (3*n_pts, 1)
-delta_pointvar = reshape(delta_pointvar, size(U(1:3,:))); % shape: (3, n_pts)
+% delta_pointvar = [0; deltav(1:(3*size(U,2)-1))]; % shape: (3*n_pts, 1)
+% delta_pointvar = reshape(delta_pointvar, size(U(1:3,:))); % shape: (3, n_pts)
 
 % Extract the incremental 3D point update parameters (a,b,c,t1,t2,t3) for
 % each camera from the last part of deltav. 6 parameters for each camera,
 % and the first camera is fix (0 increments).
-delta_camvar = [0;0;0;0;0;0;deltav(3*size(U,2):end)]; % shape: (6*n_cams, 1)
+%delta_camvar = [0;0;0;0;0;0;deltav(3*size(U,2):end)]; % shape: (6*n_cams, 1)
+delta_camvar = deltav; % shape: (6*n_cams, 1)
 delta_camvar = reshape(delta_camvar,[6 length(P)]); % shape: (6, n_cams)
 
 % U = pflat(U); % Make sure that last coordinate is 1.
 % Update 3D points with the increments.
-Unew = pextend(U(1:3,:) + delta_pointvar);
+%Unew = pextend(U(1:3,:) + delta_pointvar);
 
 % Tangent basis for the rotation manifold.
 Ba = [0 1 0; -1 0 0; 0 0 0];

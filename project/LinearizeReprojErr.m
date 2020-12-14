@@ -338,8 +338,10 @@ end
 A = sparse(row,col,data);
 
 % Lock the coordinate system (since global frame is arbitrary):
-A = A(:,[1:3*numpts 3*numpts+7:end]); % 1st camera constant, discard the 6 corresponding columns.
-A = A(:,[2:end]); % 1st coordinate in the 1st 3D point constant, discard the first column.
+% A = A(:,[1:3*numpts 3*numpts+7:end]); % 1st camera constant, discard the 6 corresponding columns.
+% A = A(:,[2:end]); % 1st coordinate in the 1st 3D point constant, discard the first column.
+
+A = A(:, end-5:end);
 
 r = B;
 J = A;

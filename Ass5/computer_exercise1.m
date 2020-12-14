@@ -20,6 +20,7 @@ clear X
 
 lambda = 10^-9;
 
+
 % Compute initial residuals
 [err,res] = ComputeReprojectionError(P_init, X_init, x);
 histogram(res, 100)

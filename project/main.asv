@@ -3,10 +3,10 @@ load('./data/data1.mat')
 im1 = imread('./data/img1.JPG');
 
 % Parameters for the code
-ransac_threshold = 0.001; % 0.001 and 0.005 both seem good
+ransac_threshold = 0.005; % 0.001 and 0.005 both seem good
 n_iterations_RANSAC = 1000;
-n_iterations_LM = 1000;
-lambda_LM = 10^-1;
+n_iterations_LM = 100;
+lambda_LM = 10^-3;
 
 classes = ["ape", "can", "cat", "duck", "eggbox", "glue", "holepuncher"];
 
@@ -27,25 +27,21 @@ for obj_idx = 1:size(U, 2)
 end
 
 
+for i = 1:7
+    K = rq(Ps{i});
+    Ps{i} = inv(K)*Ps{i};
+end
 
-figure
+
+
 plot(u{1}(1,:), u{1}(2,:), '.')
 hold on
-x_hat = pflat(Ps{1}*pextend(U{1}));
+x_hat = pflat(P*pextend(U{1}));
 plot(x_hat(1,:), x_hat(2,:), '.')
 
 x_pose = pflat(poses{1}*pextend(U{1}));
 plot(x_pose(1,:), x_pose(2,:), '.')
 legend('u', 'u_{hat}', 'poses*X')
-
-
-% Improve the cameras matrix using LM
-Ps = improve_cameras(u, U, Ps, inliers, n_iterations_LM, lambda_LM);
-
-
-
-
-
 
 P_est = Ps; % cell array with your final pose estimates for each object .
 % Plot bounding boxes of all objects , overlayed on image .
