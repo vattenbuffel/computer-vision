@@ -4,10 +4,10 @@ function [scores_ms, scores_ms_ransac, scores_ms_ransac_LM] = generate_scores(nr
     [im1, u, U, poses, bounding_boxes] = load_data(nr);
 
     % Parameters for the code
-    ransac_threshold = 0.001; % 0.001 and 0.005 both seem good
+    ransac_threshold = 0.005; % 0.001 and 0.005 both seem good
     n_iterations_RANSAC = 1000;
-    n_iterations_LM = 1000;
-    lambda_LM = 10^-5;
+    n_iterations_LM = 100;
+    lambda_LM = 10^2;
 
     classes = ["ape", "can", "cat", "duck", "eggbox", "glue", "holepuncher"];
 
@@ -26,6 +26,7 @@ function [scores_ms, scores_ms_ransac, scores_ms_ransac_LM] = generate_scores(nr
         Ps{obj_idx} = P;
         inliers{obj_idx} = inlier;
 
+          % Plot inliers
 %         if should_plot
 %             figure
 %             axis ij

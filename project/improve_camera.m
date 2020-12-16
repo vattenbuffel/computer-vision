@@ -1,8 +1,4 @@
     function P = improve_camera(u, U, P, inliers, n, lambda)
-%     clc; clear all; close all
-%     load('Ps.mat')
-%     load('inliers.mat')
-%     load('./data/data1.mat')
 
     U_homo =  euclidian_to_homo(U(:,inliers));
     u_homo =  euclidian_to_homo(u(:,inliers));
